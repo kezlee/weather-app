@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 
 const SearchContainer = styled.section`
-  margin-bottom: 112px;
+  margin-bottom: 24px;
 `
 
 const SearchInputWrapper = styled.div`
@@ -42,15 +42,44 @@ const SearchButton = styled.button`
   border: 0;
 `
 
-function Search() {
+interface SearchProps {
+  country: string
+  setCountry: React.Dispatch<React.SetStateAction<string>>
+  setTriggerSearch: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Search: React.FC<SearchProps> = ({
+  country,
+  setCountry,
+  setTriggerSearch,
+}) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCountry(event.target.value);
+  };
+
+  const updateSearch = () => {
+    console.log('country', country);
+    
+    if (country) {
+      setTriggerSearch(true)
+    }
+  }
+
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    // Check if the pressed key is "Enter" (key code 13)
+    if (event.key === 'Enter') {
+      updateSearch();
+    }
+  };
+
   return (
     <SearchContainer>
       <SpaceBetween>
         <SearchInputWrapper>
           <SearchLabel>Country</SearchLabel>
-          <SearchInput />
+          <SearchInput type="text" value={country} onChange={handleInputChange} onKeyUp={handleKeyUp} />
         </SearchInputWrapper>
-        <SearchButton aria-label="Search">
+        <SearchButton aria-label="Search" onClick={() => updateSearch()}>
           <SearchIcon fontSize="large" />
         </SearchButton>
       </SpaceBetween>
