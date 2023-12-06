@@ -14,8 +14,7 @@ const DetailsContainer = styled.section`
   border-radius: 40px;
   position: relative;
   padding: 46px 50px;
-  margin-top: 92px;
-
+  margin-top: 112px;
 `
 
 const WeatherImg = styled.div`

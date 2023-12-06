@@ -2,6 +2,7 @@ import React from 'react';
 import { SpaceBetween } from '../styles/Styles';
 import styled from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
+import Loader from './Loader';
 
 const SearchContainer = styled.section`
   margin-bottom: 24px;
@@ -40,16 +41,27 @@ const SearchButton = styled.button`
   height: 60px;
   border-radius: 20px;
   border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.7;
+    pointer-events: none;
+  }
 `
 
 interface SearchProps {
   country: string
+  loading: boolean
   setCountry: React.Dispatch<React.SetStateAction<string>>
   setTriggerSearch: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 const Search: React.FC<SearchProps> = ({
   country,
+  loading,
   setCountry,
   setTriggerSearch,
 }) => {
@@ -76,8 +88,8 @@ const Search: React.FC<SearchProps> = ({
           <SearchLabel>Country</SearchLabel>
           <SearchInput type="text" value={country} onChange={handleInputChange} onKeyUp={handleKeyUp} />
         </SearchInputWrapper>
-        <SearchButton aria-label="Search" onClick={() => updateSearch()}>
-          <SearchIcon fontSize="large" />
+        <SearchButton aria-label="Search" onClick={() => updateSearch()} disabled={loading || country.length === 0}>
+          {loading ? <Loader /> : <SearchIcon fontSize="large" />}
         </SearchButton>
       </SpaceBetween>
     </SearchContainer>
