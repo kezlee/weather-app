@@ -18,4 +18,8 @@ export const SpaceBetween = styled(FlexBox)`
   justify-content: space-between;
 `
 
+export const SpaceEvenly = styled(FlexBox)`
+  justify-content: space-evenly;
+`
+
 
