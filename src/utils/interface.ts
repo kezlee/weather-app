@@ -1,3 +1,9 @@
+export interface HistoryItem {
+  name: string; 
+  country: string;
+  time: string;
+}
+
 export interface WeatherItem {
   coord: Coord;
   weather: Weather[];

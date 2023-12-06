@@ -4,6 +4,7 @@ import { Typography, List } from '@mui/material';
 import { SpaceBetween, FlexBox } from '../styles/Styles';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { HistoryItem } from '../utils/interface';
 
 const SearchHistoryContainer = styled.section`
   background: #1A1A1A4D;
@@ -13,10 +14,14 @@ const SearchHistoryContainer = styled.section`
   margin-top: 10px;
 `
 
-const HistoryItem = styled.div`
+const HistoryListItem = styled.div`
   background: #1A1A1A80;
   padding: 13px 21px;
   border-radius: 16px;
+  margin-bottom: 18px;
+  &:last-child {
+    margin-bottom: 0;
+  }
 `
 
 const ActionIcon = styled.div`
@@ -31,25 +36,32 @@ const ActionIcon = styled.div`
   margin-left: 10px;
 `
 
-function SearchHistory() {
+interface SearchHistoryProps {
+  historyList: HistoryItem[]
+}
+
+const SearchHistory:React.FC<SearchHistoryProps> = ({historyList}) => {  
   return (
     <SearchHistoryContainer>
       <Typography mb={2}>Search History</Typography>
       <List>
-        <HistoryItem>
-          <SpaceBetween>
-            <Typography>Johor, MY</Typography>
-            <FlexBox>
-              <Typography sx={{fontSize: '14px', color: '#FFFFFF80',}}>01-09-2022 09:41am</Typography>
-              <ActionIcon>
-                <SearchIcon fontSize='small' />
-              </ActionIcon>
-              <ActionIcon>
-                <DeleteIcon fontSize='small' />
-              </ActionIcon>
-            </FlexBox>
-          </SpaceBetween>
-        </HistoryItem>
+        {historyList.map((item, index) => (
+          index !== 0 &&
+          <HistoryListItem key={item.name}>
+            <SpaceBetween>
+              <Typography>{item.name}, {item.country}</Typography>
+              <FlexBox>
+                <Typography sx={{fontSize: '14px', color: '#FFFFFF80',}}>{item.time}</Typography>
+                <ActionIcon>
+                  <SearchIcon fontSize='small' />
+                </ActionIcon>
+                <ActionIcon>
+                  <DeleteIcon fontSize='small' />
+                </ActionIcon>
+              </FlexBox>
+            </SpaceBetween>
+          </HistoryListItem>
+        ))}
       </List>
     </SearchHistoryContainer>
   );

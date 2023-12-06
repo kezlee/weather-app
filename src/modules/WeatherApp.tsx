@@ -3,8 +3,11 @@ import Search from '../components/Search';
 import { MainContainer } from '../styles/Styles';
 import WeatherDetails from '../components/WeatherDetails';
 import { Alert } from '@mui/material';
+import { HistoryItem } from '../utils/interface';
+import { getCurrentDateTime } from '../utils/helpers';
 
 const WeatherApp = () => {
+  const [historyList, setHistoryList] = useState<HistoryItem[]>([])
   const [country, setCountry] = useState('')
   const [hasError, setHasError] = useState(false)
   const [triggerSearch, setTriggerSearch] = useState(false)
@@ -19,9 +22,16 @@ const WeatherApp = () => {
         const response = await fetch(apiUrl);
         const data = await response.json();
         
-        setData(data);
-        setHasError(data.cod !== 200)
+        if (data.cod === 200) {
+          setData(data);
+          setHistoryList([{name: data.name, country: data.sys.country, time: getCurrentDateTime()}, ...historyList])
+          setHasError(false)
+        } else {
+          setHasError(true)
+        }
+        
       } catch (error) {
+
       } finally {
         setTriggerSearch(false)
         setCountry('')
@@ -37,7 +47,7 @@ const WeatherApp = () => {
     <MainContainer>
       <Search country={country} setCountry={setCountry} setTriggerSearch={setTriggerSearch}></Search>
       {hasError && <Alert severity="error">City not found</Alert>}
-      {data && !hasError && <WeatherDetails data={data}></WeatherDetails>}
+      {data && !hasError && <WeatherDetails data={data} historyList={historyList}></WeatherDetails>}
     </MainContainer>
   );
 }

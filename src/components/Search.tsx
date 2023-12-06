@@ -58,15 +58,12 @@ const Search: React.FC<SearchProps> = ({
   };
 
   const updateSearch = () => {
-    console.log('country', country);
-    
     if (country) {
       setTriggerSearch(true)
     }
   }
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    // Check if the pressed key is "Enter" (key code 13)
     if (event.key === 'Enter') {
       updateSearch();
     }

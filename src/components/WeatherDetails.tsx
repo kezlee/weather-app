@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Typography } from '@mui/material';
 import cloud from '../assets/images/sun.png'
 import { SpaceBetween } from '../styles/Styles';
 import SearchHistory from './SearchHistory';
-import { WeatherItem } from '../utils/interface';
+import { WeatherItem, HistoryItem } from '../utils/interface';
+import { getCurrentDateTime } from '../utils/helpers';
 
 const DetailsContainer = styled.section`
   background: #1A1A1A4D;
@@ -25,26 +26,14 @@ const WeatherImg = styled.div`
 `
 interface WeatherDetailsProps {
   data: WeatherItem
+  historyList: HistoryItem[]
 }
 
-const WeatherDetails: React.FC<WeatherDetailsProps>  = ({data}) => {
+const WeatherDetails: React.FC<WeatherDetailsProps>  = ({data, historyList}) => {
+  
   const convertTempToDegree = (temp: number) => {
     const celsius = temp - 273.15;
     return celsius.toFixed(0)
-  }
-
-  const getCurrentDateTime = () => {  
-    const now = new Date();
-    const formattedDateTime = now.toLocaleString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    });
-  
-    return formattedDateTime;
   }
 
   return (
@@ -62,7 +51,7 @@ const WeatherDetails: React.FC<WeatherDetailsProps>  = ({data}) => {
         <p>{data.weather[0].main}</p>
       </SpaceBetween>
 
-      <SearchHistory></SearchHistory>
+      {historyList && historyList.length > 1 && <SearchHistory historyList={historyList}></SearchHistory>}
     </DetailsContainer>
   );
 }
