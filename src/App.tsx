@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
 import background from './assets/images/bg-dark.png';
 import './App.css';
+import styled, { css } from 'styled-components'
+import WeatherApp from './modules/WeatherApp';
+
+const Main = styled.section(
+  () => css`
+    background: url(${background}) center center;
+    padding: 26px 0 40px;
+    width: 100%;
+    min-height: 100vh;
+    background-size: cover;
+  `
+)
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={background} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Main>
+      <WeatherApp></WeatherApp>
+    </Main>
   );
 }
 
