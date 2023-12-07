@@ -1,28 +1,40 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { DefaultTheme, css } from 'styled-components';
 import { Typography, List } from '@mui/material';
-import { SpaceBetween, FlexBox } from '../styles/Styles';
+import { SpaceBetween, FlexBox, WeatherTypography, MobileOnly, DesktopOnly } from '../styles/Styles';
 import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { HistoryItem } from '../utils/interface';
 
-const SearchHistoryContainer = styled.section`
-  background: #1A1A1A4D;
-  width: 100%;
-  border-radius: 24px;
-  padding: 23px 26px;
-  margin-top: 10px;
-`
+const SearchHistoryContainer = styled.section(
+  ({theme}: DefaultTheme) => css`
+    background: #1A1A1A4D;
+    width: 100%;
+    border-radius: 24px;
+    padding: 22px 20px;
+    margin-top: 20px;
 
-const HistoryListItem = styled.div`
-  background: #1A1A1A80;
-  padding: 13px 21px;
-  border-radius: 16px;
-  margin-bottom: 18px;
-  &:last-child {
-    margin-bottom: 0;
-  }
-`
+    ${theme.breakpoints.up('sm')} {
+      margin-top: 26px;
+      padding: 23px 26px;
+    }
+`)
+
+const HistoryListItem = styled.div(
+  ({theme}: DefaultTheme) => css`
+    background: #1A1A1A80;
+    padding: 10px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+
+    ${theme.breakpoints.up('sm')} {
+      padding: 13px 21px;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+`)
 
 const ActionIcon = styled.button`
   border: 2px solid #FFFFFF66;
@@ -37,6 +49,16 @@ const ActionIcon = styled.button`
   background: transparent;
   cursor: pointer;
 `
+
+const TimeStampTypography = styled.p(
+  ({theme}: DefaultTheme) => css`
+  font-size: 10px;
+  color: #FFFFFF80;
+
+  ${theme.breakpoints.up('sm')} {
+    font-size: 14px;
+  }
+`)
 
 interface SearchHistoryProps {
   historyList: HistoryItem[]
@@ -59,15 +81,23 @@ const SearchHistory:React.FC<SearchHistoryProps> = ({historyList, setHistoryList
   }
   return (
     <SearchHistoryContainer>
-      <Typography mb={2}>Search History</Typography>
-      <List>
+      <WeatherTypography>Search History</WeatherTypography>
+      <List sx={{marginTop: '14px'}}>
         {historyList.map((item, index) => (
           index !== 0 &&
           <HistoryListItem key={item.name + index}>
             <SpaceBetween>
-              <Typography>{item.name}, {item.country}</Typography>
+              <div>
+                <WeatherTypography>{item.name}, {item.country}</WeatherTypography>
+                <MobileOnly>
+                  <Typography sx={{fontSize: '10px', color: '#FFFFFF80',}}>{item.time}</Typography>
+                </MobileOnly>
+              </div>
+
               <FlexBox>
-                <Typography sx={{fontSize: '14px', color: '#FFFFFF80',}}>{item.time}</Typography>
+                <DesktopOnly>
+                  <Typography sx={{fontSize: '14px', color: '#FFFFFF80',}}>{item.time}</Typography>
+                </DesktopOnly>
                 <ActionIcon onClick={() => updateSearch(item.name)}>
                   <SearchIcon fontSize='small' />
                 </ActionIcon>
