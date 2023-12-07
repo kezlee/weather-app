@@ -1,5 +1,4 @@
 import styled, { css, DefaultTheme } from 'styled-components'
-import { useTheme } from '@mui/system';
 
 /**
  * Global base styles
@@ -16,6 +15,16 @@ export const MainContainer = styled.main(
   `
 )
 
+export const WeatherTypography = styled.p(
+  ({theme}: DefaultTheme) => css`
+    font-size: ${theme.typography.pxToRem(14)};
+    margin: 0;
+
+    ${theme.breakpoints.up('sm')} {
+      font-size: ${theme.typography.pxToRem(16)};
+    }
+`)
+
 export const FlexBox = styled.div`
   display: flex;
   align-items: center;
@@ -28,5 +37,25 @@ export const SpaceBetween = styled(FlexBox)`
 export const SpaceEvenly = styled(FlexBox)`
   justify-content: space-evenly;
 `
+
+export const MobileOnly = styled.div(
+  ({theme}: DefaultTheme) => css`
+    display: block;
+
+    ${theme.breakpoints.up('sm')} {
+      display: none;
+    }
+  `
+)
+
+export const DesktopOnly = styled.div(
+  ({theme}: DefaultTheme) => css`
+    display: none;
+
+    ${theme.breakpoints.up('sm')} {
+      display: block;
+    }
+  `
+)
 
 
