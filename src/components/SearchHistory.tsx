@@ -82,6 +82,7 @@ const SearchHistory:React.FC<SearchHistoryProps> = ({historyList, setHistoryList
   return (
     <SearchHistoryContainer>
       <WeatherTypography>Search History</WeatherTypography>
+      {historyList && historyList.length > 1 ? 
       <List sx={{marginTop: '14px'}}>
         {historyList.map((item, index) => (
           index !== 0 &&
@@ -109,6 +110,10 @@ const SearchHistory:React.FC<SearchHistoryProps> = ({historyList, setHistoryList
           </HistoryListItem>
         ))}
       </List>
+      :
+      <Typography component="p" sx={{ fontSize: '14px', color: '#ccc', marginTop: '5px'}}>No record</Typography>
+    }
+      
     </SearchHistoryContainer>
   );
 }

@@ -93,12 +93,12 @@ const WeatherDetails: React.FC<WeatherDetailsProps>  = ({data, historyList, setH
         </SpaceBetween>
       </DesktopOnly>
 
-      {historyList && historyList.length > 1 && <SearchHistory 
+      <SearchHistory 
         historyList={historyList} 
         setHistoryList={setHistoryList} 
         setCountry={setCountry} 
         setTriggerSearch={setTriggerSearch}
-      />}
+      />
     </DetailsContainer>
   );
 }

@@ -57,5 +57,3 @@ export const DesktopOnly = styled.div(
     }
   `
 )
-
-

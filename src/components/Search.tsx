@@ -123,7 +123,7 @@ const Search: React.FC<SearchProps> = ({
       <SpaceBetween>
         <SearchInputWrapper>
           <SearchLabel>Country</SearchLabel>
-          <SearchInput type="text" value={country} onChange={handleInputChange} onKeyUp={handleKeyUp} />
+          <SearchInput type="text" placeholder="Please enter city/country" value={country} onChange={handleInputChange} onKeyUp={handleKeyUp} />
         </SearchInputWrapper>
         <SearchButton aria-label="Search" onClick={() => updateSearch()} disabled={loading || country.length === 0}>
           {loading ? <Loader /> : <SearchIcon fontSize="large" />}
