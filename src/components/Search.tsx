@@ -1,6 +1,6 @@
 import React from 'react';
 import { SpaceBetween } from '../styles/Styles';
-import styled from 'styled-components';
+import styled, { DefaultTheme, css } from 'styled-components';
 import SearchIcon from '@mui/icons-material/Search';
 import Loader from './Loader';
 
@@ -8,49 +8,86 @@ const SearchContainer = styled.section`
   margin-bottom: 24px;
 `
 
-const SearchInputWrapper = styled.div`
-  max-width: 620px;
-  width: 100%;
-  height: 60px;
-  position: relative;
-`
+const SearchInputWrapper = styled.div(
+  ({theme}: DefaultTheme) => css`
+    height: 40px;
+    width: 100%;
+    position: relative;
+    
+    ${theme.breakpoints.up('sm')} {
+      max-width: 620px;
+      height: 60px;
+    }
+  `
+)
 
-const SearchLabel = styled.label`
-  color: #FFFFFF66;
-  position: absolute;
-  top: 8px;
-  left: 22px;
-  font-size: 10px;
-`
+const SearchLabel = styled.label(
+  ({theme}: DefaultTheme) => css`
+    color: #FFFFFF66;
+    position: absolute;
+    top: 4px;
+    left: 12px;
+    font-size: 8px;
 
-const SearchInput = styled.input`
-  width: 100%;
-  color: #ffffff;
-  padding: 26px 22px 16px;
-  background: #1A1A1A80;
-  border: 0;
-  outline: 0;
-  border-radius: 20px;
-  font-size: 16px;
-`
+    ${theme.breakpoints.up('sm')} {
+      left: 22px;
+      top: 8px;
+      font-size: 10px;
+    }
+  `
+)
 
-const SearchButton = styled.button`
-  background: #28124D;
-  color: #ffffff;
-  width: 60px;
-  height: 60px;
-  border-radius: 20px;
-  border: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+const SearchInput = styled.input(
+  ({theme}: DefaultTheme) => css`
+    padding: 18px 12px 8px;
+    color: #ffffff;
+    background: #1A1A1A80;
+    border: 0;
+    outline: 0;
+    border-radius: 8px;
+    font-size: 12px;
+    width: 100%;
 
-  &:disabled {
-    opacity: 0.7;
-    pointer-events: none;
-  }
-`
+    ${theme.breakpoints.up('sm')} {
+      padding: 26px 22px 16px;
+      font-size: 16px;
+      border-radius: 20px;
+    }
+  `
+)
+
+const SearchButton = styled.button(
+  ({theme}: DefaultTheme) => css`
+    background: #28124D;
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 10px;
+
+    ${theme.breakpoints.down('sm')} {
+      svg {
+        font-size: 20px;
+      }
+    }
+
+    ${theme.breakpoints.up('sm')} {
+      width: 60px;
+      height: 60px;
+      border-radius: 20px;
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+  `
+)
 
 interface SearchProps {
   country: string
