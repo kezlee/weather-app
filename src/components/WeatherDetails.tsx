@@ -4,7 +4,7 @@ import cloud from '../assets/images/sun.png'
 import { SpaceBetween, DesktopOnly, MobileOnly, WeatherTypography } from '../styles/Styles';
 import SearchHistory from './SearchHistory';
 import { WeatherItem, HistoryItem } from '../utils/interface';
-import { getCurrentDateTime } from '../utils/helpers';
+import { getCurrentDateTime, displayCelsius } from '../utils/helpers';
 
 const DetailsContainer = styled.section(
   ({theme}: DefaultTheme) => css`
@@ -58,23 +58,17 @@ interface WeatherDetailsProps {
 }
 
 const WeatherDetails: React.FC<WeatherDetailsProps>  = ({data, historyList, setHistoryList, setCountry, setTriggerSearch}) => {
-  
-  const convertTempToDegree = (temp: number) => {
-    const celsius = temp - 273.15;
-    return celsius.toFixed(0)
-  }
-
   return (
     <DetailsContainer>
       <WeatherImg>
-        <img src={cloud} />
+        <img src={cloud} alt="Weather" />
       </WeatherImg>
       <WeatherTypography>Today's Weather</WeatherTypography>
 
       <SpaceBetween style={{alignItems: 'end'}}>
         <div>
-          <Celsius>{convertTempToDegree(data.main.temp)}°</Celsius>
-          <WeatherTypography>H: {convertTempToDegree(data.main.temp_max)}° L: {convertTempToDegree(data.main.temp_min)}°</WeatherTypography>
+          <Celsius>{displayCelsius(data.main.temp)}°</Celsius>
+          <WeatherTypography>H: {displayCelsius(data.main.temp_max)}° L: {displayCelsius(data.main.temp_min)}°</WeatherTypography>
           <MobileOnly><WeatherTypography><b>{data.name}, {data.sys.country}</b></WeatherTypography></MobileOnly>
         </div>
         <MobileOnly style={{textAlign: 'right'}}>

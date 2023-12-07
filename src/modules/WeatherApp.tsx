@@ -17,34 +17,43 @@ const WeatherApp = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
+      
       try {
         const apiKey = '5f081e14e5bae4e2f8a895b7f857c6b4';
         const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${country}&appid=${apiKey}`;
-
+    
         const response = await fetch(apiUrl);
         const data = await response.json();
-        
+    
         if (data.cod === 200) {
           setData(data);
-          setHistoryList([{name: data.name, country: data.sys.country, time: getCurrentDateTime()}, ...historyList])
-          setHasError(false)
+    
+          const newHistoryItem = {
+            name: data.name,
+            country: data.sys.country,
+            time: getCurrentDateTime(),
+          };
+    
+          setHistoryList([newHistoryItem, ...historyList]);
+          setHasError(false);
         } else {
-          setHasError(true)
+          setHasError(true);
         }
-        
+    
       } catch (error) {
-
+        // Handle errors if needed
       } finally {
-        setTriggerSearch(false)
-        setCountry('')
-        setLoading(false)
-      }
+        setTriggerSearch(false);
+        setCountry('');
+        setLoading(false);
+      };
+  
     };
 
     if (triggerSearch) {
       fetchData();
     }
-  }, [triggerSearch]);
+  }, [triggerSearch, country, historyList]);
 
   return (
     <MainContainer>

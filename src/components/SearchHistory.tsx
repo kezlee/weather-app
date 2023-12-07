@@ -50,16 +50,6 @@ const ActionIcon = styled.button`
   cursor: pointer;
 `
 
-const TimeStampTypography = styled.p(
-  ({theme}: DefaultTheme) => css`
-  font-size: 10px;
-  color: #FFFFFF80;
-
-  ${theme.breakpoints.up('sm')} {
-    font-size: 14px;
-  }
-`)
-
 interface SearchHistoryProps {
   historyList: HistoryItem[]
   setHistoryList: React.Dispatch<React.SetStateAction<HistoryItem[]>>

@@ -11,3 +11,8 @@ export const getCurrentDateTime = () => {
 
   return formattedDateTime;
 }
+
+export const displayCelsius = (temp: number) => {
+  const celsius = temp - 273.15;
+  return celsius.toFixed(0)
+}
