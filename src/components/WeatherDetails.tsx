@@ -8,8 +8,9 @@ import { getCurrentDateTime, displayCelsius } from '../utils/helpers';
 
 const DetailsContainer = styled.section(
   ({theme}: DefaultTheme) => css`
-    background: #1A1A1A4D;
+    background: ${theme.weatherDetailBg};
     color: #ffffff;
+    border: 1px solid ${theme.weatherDetailBorder};
     width: 100%;
     border-radius: 20px;
     position: relative;
@@ -43,10 +44,16 @@ const Celsius = styled.h1(
     font-size: ${theme.typography.pxToRem(60)};
     line-height: 1;
     margin: 0;
+    color: ${theme.celcius};
 
     ${theme.breakpoints.up('sm')} {
       font-size: ${theme.typography.pxToRem(120)};
     }
+`)
+
+const WeatherInfo = styled(WeatherTypography)(
+  ({theme}: DefaultTheme) => css`
+    color: ${theme.weatherInfo};
 `)
 
 interface WeatherDetailsProps {
@@ -69,21 +76,21 @@ const WeatherDetails: React.FC<WeatherDetailsProps>  = ({data, historyList, setH
         <div>
           <Celsius>{displayCelsius(data.main.temp)}°</Celsius>
           <WeatherTypography>H: {displayCelsius(data.main.temp_max)}° L: {displayCelsius(data.main.temp_min)}°</WeatherTypography>
-          <MobileOnly><WeatherTypography><b>{data.name}, {data.sys.country}</b></WeatherTypography></MobileOnly>
+          <MobileOnly><WeatherInfo><b>{data.name}, {data.sys.country}</b></WeatherInfo></MobileOnly>
         </div>
         <MobileOnly style={{textAlign: 'right'}}>
-          <WeatherTypography>{data.weather[0].main}</WeatherTypography>
-          <WeatherTypography>Humidity: {data.main.humidity}%</WeatherTypography>
-          <WeatherTypography>{getCurrentDateTime()}</WeatherTypography>
+          <WeatherInfo>{data.weather[0].main}</WeatherInfo>
+          <WeatherInfo>Humidity: {data.main.humidity}%</WeatherInfo>
+          <WeatherInfo>{getCurrentDateTime()}</WeatherInfo>
         </MobileOnly>
       </SpaceBetween>
 
       <DesktopOnly>
         <SpaceBetween>
-          <WeatherTypography><b>{data.name}, {data.sys.country}</b></WeatherTypography>
-          <WeatherTypography>{getCurrentDateTime()}</WeatherTypography>
-          <WeatherTypography>Humidity: {data.main.humidity}%</WeatherTypography>
-          <WeatherTypography>{data.weather[0].main}</WeatherTypography>
+          <WeatherInfo><b>{data.name}, {data.sys.country}</b></WeatherInfo>
+          <WeatherInfo>{getCurrentDateTime()}</WeatherInfo>
+          <WeatherInfo>Humidity: {data.main.humidity}%</WeatherInfo>
+          <WeatherInfo>{data.weather[0].main}</WeatherInfo>
         </SpaceBetween>
       </DesktopOnly>
 

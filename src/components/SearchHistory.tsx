@@ -8,7 +8,7 @@ import { HistoryItem } from '../utils/interface';
 
 const SearchHistoryContainer = styled.section(
   ({theme}: DefaultTheme) => css`
-    background: #1A1A1A4D;
+    background: ${theme.weatherDetailBg};
     width: 100%;
     border-radius: 24px;
     padding: 22px 20px;
@@ -22,7 +22,7 @@ const SearchHistoryContainer = styled.section(
 
 const HistoryListItem = styled.div(
   ({theme}: DefaultTheme) => css`
-    background: #1A1A1A80;
+    background: ${theme.historyItemBg};
     padding: 10px;
     border-radius: 16px;
     margin-bottom: 18px;
@@ -36,19 +36,30 @@ const HistoryListItem = styled.div(
     }
 `)
 
-const ActionIcon = styled.button`
-  border: 2px solid #FFFFFF66;
-  color: #FFFFFF80;
-  border-radius: 50%;
-  width: 34px;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 10px;
-  background: transparent;
-  cursor: pointer;
-`
+const ActionIcon = styled.button(
+  ({theme}: DefaultTheme) => css`
+    border: 2px solid ${theme.iconBorder};
+    color: ${theme.iconColor};
+    background: ${theme.iconBg};
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    cursor: pointer;
+`)
+
+const TimeStamp = styled(Typography)(
+  ({theme}: DefaultTheme) => css`
+    color: ${theme.timeStamp}
+`)
+
+const EmptyMsg = styled(Typography)(
+  ({theme}: DefaultTheme) => css`
+    color: ${theme.emptyMsgTxt}
+`)
 
 interface SearchHistoryProps {
   historyList: HistoryItem[]
@@ -81,13 +92,13 @@ const SearchHistory:React.FC<SearchHistoryProps> = ({historyList, setHistoryList
               <div>
                 <WeatherTypography>{item.name}, {item.country}</WeatherTypography>
                 <MobileOnly>
-                  <Typography sx={{fontSize: '10px', color: '#FFFFFF80',}}>{item.time}</Typography>
+                  <TimeStamp sx={{fontSize: '10px',}}>{item.time}</TimeStamp>
                 </MobileOnly>
               </div>
 
               <FlexBox>
                 <DesktopOnly>
-                  <Typography sx={{fontSize: '14px', color: '#FFFFFF80',}}>{item.time}</Typography>
+                  <TimeStamp sx={{fontSize: '14px',}}>{item.time}</TimeStamp>
                 </DesktopOnly>
                 <ActionIcon onClick={() => updateSearch(item.name)}>
                   <SearchIcon fontSize='small' />
@@ -101,7 +112,7 @@ const SearchHistory:React.FC<SearchHistoryProps> = ({historyList, setHistoryList
         ))}
       </List>
       :
-      <Typography component="p" sx={{ fontSize: '14px', color: '#ccc', marginTop: '5px'}}>No record</Typography>
+      <EmptyMsg component="p" sx={{ fontSize: '14px', marginTop: '5px'}}>No record</EmptyMsg>
     }
       
     </SearchHistoryContainer>

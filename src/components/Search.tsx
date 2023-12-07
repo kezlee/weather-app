@@ -23,7 +23,7 @@ const SearchInputWrapper = styled.div(
 
 const SearchLabel = styled.label(
   ({theme}: DefaultTheme) => css`
-    color: #FFFFFF66;
+    color: ${theme.searchLabel};
     position: absolute;
     top: 4px;
     left: 12px;
@@ -40,8 +40,8 @@ const SearchLabel = styled.label(
 const SearchInput = styled.input(
   ({theme}: DefaultTheme) => css`
     padding: 18px 12px 8px;
-    color: #ffffff;
-    background: #1A1A1A80;
+    color: ${theme.text};
+    background: ${theme.searchBoxBg};
     border: 0;
     outline: 0;
     border-radius: 8px;
@@ -58,7 +58,7 @@ const SearchInput = styled.input(
 
 const SearchButton = styled.button(
   ({theme}: DefaultTheme) => css`
-    background: #28124D;
+    background: ${theme.searchBtnBg};
     color: #ffffff;
     width: 40px;
     height: 40px;

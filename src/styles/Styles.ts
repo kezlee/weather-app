@@ -17,6 +17,7 @@ export const MainContainer = styled.main(
 
 export const WeatherTypography = styled.p(
   ({theme}: DefaultTheme) => css`
+    color: ${theme.text};
     font-size: ${theme.typography.pxToRem(14)};
     margin: 0;
 
