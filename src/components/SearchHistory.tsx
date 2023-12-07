@@ -24,7 +24,7 @@ const HistoryListItem = styled.div`
   }
 `
 
-const ActionIcon = styled.div`
+const ActionIcon = styled.button`
   border: 2px solid #FFFFFF66;
   color: #FFFFFF80;
   border-radius: 50%;
@@ -34,28 +34,44 @@ const ActionIcon = styled.div`
   align-items: center;
   justify-content: center;
   margin-left: 10px;
+  background: transparent;
+  cursor: pointer;
 `
 
 interface SearchHistoryProps {
   historyList: HistoryItem[]
+  setHistoryList: React.Dispatch<React.SetStateAction<HistoryItem[]>>
+  setCountry: React.Dispatch<React.SetStateAction<string>>
+  setTriggerSearch: React.Dispatch<React.SetStateAction<boolean>>
+
 }
 
-const SearchHistory:React.FC<SearchHistoryProps> = ({historyList}) => {  
+const SearchHistory:React.FC<SearchHistoryProps> = ({historyList, setHistoryList, setCountry, setTriggerSearch}) => { 
+  const deleteItem = (index: number) => {
+    setHistoryList((prevHistoryList) =>
+      prevHistoryList.filter((item, i) => i !== index)
+    );
+  }
+
+  const updateSearch = (name: string) => {
+    setCountry(name)
+    setTriggerSearch(true)
+  }
   return (
     <SearchHistoryContainer>
       <Typography mb={2}>Search History</Typography>
       <List>
         {historyList.map((item, index) => (
           index !== 0 &&
-          <HistoryListItem key={item.name}>
+          <HistoryListItem key={item.name + index}>
             <SpaceBetween>
               <Typography>{item.name}, {item.country}</Typography>
               <FlexBox>
                 <Typography sx={{fontSize: '14px', color: '#FFFFFF80',}}>{item.time}</Typography>
-                <ActionIcon>
+                <ActionIcon onClick={() => updateSearch(item.name)}>
                   <SearchIcon fontSize='small' />
                 </ActionIcon>
-                <ActionIcon>
+                <ActionIcon onClick={() => deleteItem(index)}>
                   <DeleteIcon fontSize='small' />
                 </ActionIcon>
               </FlexBox>

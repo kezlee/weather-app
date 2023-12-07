@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Search from '../components/Search';
 import { MainContainer } from '../styles/Styles';
 import WeatherDetails from '../components/WeatherDetails';
-import Loader from '../components/Loader';
 import { Alert } from '@mui/material';
 import { HistoryItem } from '../utils/interface';
 import { getCurrentDateTime } from '../utils/helpers';
@@ -51,7 +50,13 @@ const WeatherApp = () => {
     <MainContainer>
       <Search country={country} loading={loading} setCountry={setCountry} setTriggerSearch={setTriggerSearch} />
       {hasError && <Alert severity="error">City not found</Alert>}
-      {data && !hasError && <WeatherDetails data={data} historyList={historyList} />}
+      {data && !hasError && <WeatherDetails 
+        data={data} 
+        historyList={historyList} 
+        setHistoryList={setHistoryList}
+        setCountry={setCountry} 
+        setTriggerSearch={setTriggerSearch} 
+      />}
     </MainContainer>
   );
 }
